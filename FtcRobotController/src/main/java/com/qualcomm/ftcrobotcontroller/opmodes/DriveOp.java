@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by David F. on 9/3/2015.
  * A simple teleop drive program.
+ *
+ * Edited on:
+ * 9/7/15, Added telemetry, tested on robot, need to reverse motor direction.
  */
 public class DriveOp extends OpMode {
 
@@ -28,5 +31,10 @@ public class DriveOp extends OpMode {
         //Set the motors to the value of the y axis on the appropriate stick.
         leftDriveMotor.setPower(-gamepad1.left_stick_y);
         rightDriveMotor.setPower(-gamepad1.right_stick_y);
+
+        //send telemetry
+        telemetry.addData("left motor:", gamepad1.left_stick_y);
+        telemetry.addData("right motor:", gamepad1.right_stick_y);
+
     }
 }
