@@ -8,17 +8,15 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by David F. on 9/3/2015.
  * A simple teleop drive program.
- *
- * Edited on:
- * 9/7/15, Added telemetry, tested on robot, need to reverse motor direction.
  */
-public class DriveOp extends OpMode {
+public class TankOp extends OpMode {
 
+    public double leftSpeed;
+    public double rightSpeed;
     //declare motors
     DcMotor leftDriveMotor;
     DcMotor rightDriveMotor;
     OpticalDistanceSensor distanceSensor;
-
 
     @Override
     public void init() {
@@ -36,28 +34,59 @@ public class DriveOp extends OpMode {
     @Override
     public void loop() {
         //create variables for motor values
-        double leftPower = -gamepad1.left_stick_y;
-        double rightPower = -gamepad1.right_stick_y;
+        leftSpeed = -gamepad1.left_stick_y;
+        rightSpeed = -gamepad1.right_stick_y;
+
+        //scale input
+        leftSpeed = scaleInput(leftSpeed);
+        rightSpeed = scaleInput(rightSpeed);
 
         //do not move forward if light sensor readings are high
-        if (distanceSensor.getLightDetected() >= .05) {
-            leftPower = Range.clip(-1, 0, leftPower);
-            rightPower = Range.clip(-1, 0, rightPower);
+        if (distanceSensor.getLightDetected() >= .01) {
+            leftSpeed = Range.clip(leftSpeed, -1, 0);
+            rightSpeed = Range.clip(rightSpeed, -1, 0);
         }
         if (distanceSensor.getLightDetected() >= .75) {
-            leftPower = -.5;
-            rightPower = -.5;
+            leftSpeed = -.5;
+            rightSpeed = -.5;
         }
 
         //Set the motors to the corresponding variable
-        leftDriveMotor.setPower(leftPower);
-        rightDriveMotor.setPower(rightPower);
+        leftDriveMotor.setPower(leftSpeed);
+        rightDriveMotor.setPower(rightSpeed);
 
         //send telemetry
-        telemetry.addData("1. left motor", leftPower);
+        telemetry.addData("1. left motor", leftSpeed);
         telemetry.addData("1b. left joystick y", gamepad1.left_stick_y);
-        telemetry.addData("2. right motor", rightPower);
+        telemetry.addData("2. right motor", rightSpeed);
         telemetry.addData("3. distance sensor reading", distanceSensor.getLightDetected());
         telemetry.addData("4. distance sensor status", distanceSensor.status());
+    }
+
+    /*
+     * This method scales the joystick input so for low joystick values, the
+	 * scaled value is less than linear.  This is to make it easier to drive
+	 * the robot more precisely at slower speeds.
+	 */
+    double scaleInput(double dVal) {
+        double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 16.0);
+        if (index < 0) {
+            index = -index;
+        } else if (index > 16) {
+            index = 16;
+        }
+
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = -scaleArray[index];
+        } else {
+            dScale = scaleArray[index];
+        }
+
+        return dScale;
     }
 }
