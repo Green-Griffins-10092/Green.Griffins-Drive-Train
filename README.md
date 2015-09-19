@@ -1,10 +1,11 @@
-# ftc_app
-FTC Android Studio project to create FTC Robot Controller app.
+# One Day Robot Code
+This repository is a fork of the [ftc-app](https://github.com/ftctechnh/ftc_app) at commit 4e23900.
+It contains an abstract opmode for the Green.Griffins; one day robot, and several opmodes for controlling the robot.
+They rely on having the motors named "left_motor" and "right_motor" and an optical distance sensor called "distance_sensor" in the hardware map.
+See our [twitter page](https://twitter.com/griffins10092) or our [facebook page](https://www.facebook.com/GreenGriffins10092-489387721245658/timeline/)
+for the CAD model of the one day robot.
 
-This is the FTC SDK that can be used to create an FTC Robot Controller app, with custom op modes.
-The FTC Robot Controller app is designed to work in conjunction with the FTC Driver Station app.
-The FTC Driver Station app is available through Google Play.
-
+```
 To use this SDK, download/clone the entire project to your local computer.
 Use Android Studio to import the folder  ("Import project (Eclipse ADT, Gradle, etc.)").
 
@@ -36,4 +37,6 @@ In this latest version of the FTC SDK (20150803_001) the following changes shoul
 
 T. Eng
 August 3, 2015
-
+```
+D. Flores
+September 19, 2015
