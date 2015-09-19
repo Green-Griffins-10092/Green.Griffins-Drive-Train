@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * Created by David F. on 9/3/2015.
  * A simple teleop drive program.
+ * Uses tank control.
  */
 public class TankOp extends OutreachBotBase {
 
@@ -34,7 +35,6 @@ public class TankOp extends OutreachBotBase {
 
         //send telemetry
         telemetry.addData("1. left motor", leftSpeed);
-        telemetry.addData("1b. left joystick y", gamepad1.left_stick_y);
         telemetry.addData("2. right motor", rightSpeed);
         telemetry.addData("3. distance sensor reading", distanceSensor.getLightDetected());
         telemetry.addData("4. distance sensor status", distanceSensor.status());

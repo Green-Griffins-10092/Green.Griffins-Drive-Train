@@ -21,6 +21,7 @@ public abstract class OutreachBotBase extends OpMode {
     //declare the distance sensor
     OpticalDistanceSensor distanceSensor;
 
+    //Set up motors and sensors
     @Override
     public void init() {
         //get the motors from the hardware map named "left_motor" and "right_motor" without quotations.
@@ -38,6 +39,7 @@ public abstract class OutreachBotBase extends OpMode {
      * This method scales the joystick input so for low joystick values, the
 	 * scaled value is less than linear.  This is to make it easier to drive
 	 * the robot more precisely at slower speeds.
+	 * (Based off the scaleInput method from K9TeleOp)
 	 */
     double scaleInput(double dVal) {
         double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
@@ -45,14 +47,15 @@ public abstract class OutreachBotBase extends OpMode {
 
         // get the corresponding index for the scaleInput array.
         int index = (int) (dVal * 16.0);
+        //ensure that the index will be in range
         if (index < 0) {
             index = -index;
         }
-
         if (index > 16) {
             index = 16;
         }
 
+        //make sure the sign is right
         double dScale;
         if (dVal < 0) {
             dScale = -scaleArray[index];
