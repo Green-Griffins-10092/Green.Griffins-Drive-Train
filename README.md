@@ -4,7 +4,7 @@ It contains an abstract opmode for the Green.Griffins; one day robot, and severa
 They rely on having the motors named "left_motor" and "right_motor" and an optical distance sensor called "distance_sensor" in the hardware map.
 See our [twitter page](https://twitter.com/griffins10092) or our [facebook page](https://www.facebook.com/GreenGriffins10092-489387721245658/timeline/)
 for the CAD model of the one day robot.
-If you find any errors, please add an issue in the [git hub tracker](https://github.com/archerD/Green.Griffins-Drive-Train/issues/new).
+If you find any errors, please add an issue in the [git hub issue tracker](https://github.com/archerD/Green.Griffins-Drive-Train/issues/new).
 
 ```
 To use this SDK, download/clone the entire project to your local computer.
