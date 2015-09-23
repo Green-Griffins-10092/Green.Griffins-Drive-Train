@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by David F. on 9/10/2015.
@@ -10,16 +11,22 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
  */
 public abstract class OutreachBotBase extends OpMode {
     //several named constants
-    public static final double STOP_DISTANCE_VALUE = .01;
-    public static final double BACKUP_DISTANCE_VALUE = .5;
+    protected static final double STOP_DISTANCE_VALUE = .01;
+    protected static final double BACKUP_DISTANCE_VALUE = .5;
+
     //initialize speed variables
-    public double leftSpeed;
-    public double rightSpeed;
+    protected double leftSpeed;
+    protected double rightSpeed;
+
     //declare motors
-    DcMotor leftDriveMotor;
-    DcMotor rightDriveMotor;
+    protected DcMotor leftDriveMotor;
+    protected DcMotor rightDriveMotor;
+
     //declare the distance sensor
-    OpticalDistanceSensor distanceSensor;
+    protected OpticalDistanceSensor distanceSensor;
+
+    //in case the sensor does not exist, use fail safe
+    private boolean sensorsExist;
 
     //Set up motors and sensors
     @Override
@@ -30,9 +37,18 @@ public abstract class OutreachBotBase extends OpMode {
         //reverse a motor so that both motors drive in the same direction
         leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        //get distance sensor
-        distanceSensor = hardwareMap.opticalDistanceSensor.get("distance_sensor");
-        distanceSensor.enableLed(true);
+        //reverse a motor so that both motors drive in the same direction
+        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        //if the sensor does not exist, proceed with out it
+        try {
+            //get distance sensor
+            distanceSensor = hardwareMap.opticalDistanceSensor.get("distance_sensor");
+            distanceSensor.enableLed(true);
+            sensorsExist = true;
+        } catch (IllegalArgumentException e) {
+            sensorsExist = false;
+        }
     }
 
     /*
@@ -41,7 +57,7 @@ public abstract class OutreachBotBase extends OpMode {
 	 * the robot more precisely at slower speeds.
 	 * (Based off the scaleInput method from K9TeleOp)
 	 */
-    double scaleInput(double dVal) {
+    protected double scaleInput(double dVal) {
         double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
 
@@ -64,5 +80,38 @@ public abstract class OutreachBotBase extends OpMode {
         }
 
         return dScale;
+    }
+
+    //This method returns whether the sensors exist
+    protected boolean doSensorsExist() {
+        return sensorsExist;
+    }
+
+    //Add the telemetry data
+    protected void addTelemetryData() {
+        //send telemetry
+        telemetry.addData("left motor", leftSpeed);
+        telemetry.addData("right motor", rightSpeed);
+        telemetry.addData("sensor status", doSensorsExist());
+        //if sensors exist
+        if (doSensorsExist()) {
+            telemetry.addData("distance sensor reading", distanceSensor.getLightDetected());
+            telemetry.addData("distance sensor status", distanceSensor.status());
+        }
+    }
+
+    //distance sensor stop
+    public void distanceSensorStop() {
+        if (doSensorsExist()) {
+            //do not move forward if light sensor readings are high
+            if (distanceSensor.getLightDetected() >= STOP_DISTANCE_VALUE) {
+                leftSpeed = Range.clip(leftSpeed, -1, 0);
+                rightSpeed = Range.clip(rightSpeed, -1, 0);
+            }
+            if (distanceSensor.getLightDetected() >= BACKUP_DISTANCE_VALUE) {
+                leftSpeed = -.5;
+                rightSpeed = -.5;
+            }
+        }
     }
 }
