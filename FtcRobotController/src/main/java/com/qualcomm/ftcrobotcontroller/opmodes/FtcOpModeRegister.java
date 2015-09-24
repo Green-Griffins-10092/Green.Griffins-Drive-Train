@@ -64,5 +64,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Tank Control", TankOp.class);
     manager.register("Arcade Control", ArcadeOp.class);
     manager.register("Video Game Control", VideoGameOp.class);
+
   }
 }
