@@ -1,5 +1,5 @@
 # One Day Robot Code
-This repository is a fork of the [ftc-app](https://github.com/ftctechnh/ftc_app) at commit 4e23900.
+This repository is a fork of the [ftc-app](https://github.com/ftctechnh/ftc_app) at commit d6e9863, Sep 23, 2015.
 It contains an abstract opmode for the Green.Griffins; one day robot, and several opmodes for controlling the robot.
 They rely on having the motors named "left_motor" and "right_motor" and an optical distance sensor called "distance_sensor" in the hardware map.
 See our [twitter page](https://twitter.com/griffins10092) or our [facebook page](https://www.facebook.com/GreenGriffins10092-489387721245658/timeline/)
