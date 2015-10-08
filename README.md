@@ -1,12 +1,19 @@
 # One Day Robot Code
-This repository is a fork of the [ftc-app](https://github.com/ftctechnh/ftc_app) at commit d6e9863, Sep 23, 2015.
-It contains an abstract opmode for the Green.Griffins; one day robot, and several opmodes for controlling the robot.
+This repository is a fork of the [ftc-app](https://github.com/ftctechnh/ftc_app) at commit 85b3fcb, October 6, 2015.
+It contains an abstract opmode for the hardware of the Green.Griffins; one day robot, and several opmodes for controlling the robot.
 They rely on having the motors named "left_motor" and "right_motor" and an optical distance sensor called "distance_sensor" in the hardware map.
 See our [twitter page](https://twitter.com/griffins10092) or our [facebook page](https://www.facebook.com/GreenGriffins10092-489387721245658/timeline/)
 for the CAD model of the one day robot.
 If you find any errors, please add an issue in the [git hub issue tracker](https://github.com/archerD/Green.Griffins-Drive-Train/issues/new).
 
 ```
+# ftc_app
+FTC Android Studio project to create FTC Robot Controller app.
+
+This is the FTC SDK that can be used to create an FTC Robot Controller app, with custom op modes.
+The FTC Robot Controller app is designed to work in conjunction with the FTC Driver Station app.
+The FTC Driver Station app is available through Google Play.
+
 To use this SDK, download/clone the entire project to your local computer.
 Use Android Studio to import the folder  ("Import project (Eclipse ADT, Gradle, etc.)").
 
@@ -19,6 +26,21 @@ Documentation for the FTC SDK are included with this repository.  There is a sub
 For technical questions regarding the SDK, please visit the FTC Technology forum:
 
   http://ftcforum.usfirst.org/forumdisplay.php?156-FTC-Technology
+
+
+**************************************************************************************
+
+Release 15.10.06.002
+
+ * Added support for Legacy Matrix 9.6V motor/servo controller.
+ * Cleaned up build.gradle file.
+ * Minor UI and bug fixes for driver station and robot controller apps.
+ * Throws error if Ultrasonic sensor (NXT) is not configured for legacy module port 4 or 5.
+
+T. Eng
+October 6, 2015
+
+**************************************************************************************
 
 In this latest version of the FTC SDK (20150803_001) the following changes should be noted:
 
@@ -40,4 +62,5 @@ T. Eng
 August 3, 2015
 ```
 D. Flores
-September 19, 2015
+October 8, 2015
+
