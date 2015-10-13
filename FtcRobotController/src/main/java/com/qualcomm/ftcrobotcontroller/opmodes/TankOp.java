@@ -23,6 +23,12 @@ public class TankOp extends OutreachBotBase {
         leftDriveMotor.setPower(leftSpeed);
         rightDriveMotor.setPower(rightSpeed);
 
+        //if the front motors exist, use them
+        if (doFrontMotorsExist()) {
+            leftFrontDriveMotor.setPower(leftSpeed);
+            rightFrontDriveMotor.setPower(rightSpeed);
+        }
+
         addTelemetryData();
     }
 }

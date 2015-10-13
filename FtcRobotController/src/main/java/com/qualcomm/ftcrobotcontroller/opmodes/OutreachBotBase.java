@@ -21,12 +21,21 @@ public abstract class OutreachBotBase extends OpMode {
     //declare motors
     protected DcMotor leftDriveMotor;
     protected DcMotor rightDriveMotor;
+    protected DcMotor rightFrontDriveMotor;
+    protected DcMotor leftFrontDriveMotor;
 
     //declare the distance sensor
     protected OpticalDistanceSensor distanceSensor;
 
     //in case the sensor does not exist, use fail safe
     private boolean sensorsExist;
+
+    public boolean doFrontMotorsExist() {
+        return frontMotorsExist;
+    }
+
+    private boolean frontMotorsExist;
+
 
     //Set up motors and sensors
     @Override
@@ -35,10 +44,19 @@ public abstract class OutreachBotBase extends OpMode {
         leftDriveMotor = hardwareMap.dcMotor.get("left_motor");
         rightDriveMotor = hardwareMap.dcMotor.get("right_motor");
         //reverse a motor so that both motors drive in the same direction
-        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightDriveMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        //reverse a motor so that both motors drive in the same direction
-        leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
+        try {
+            //get the motors from the hardware map named "left_motor" and "right_motor" without quotations.
+            leftFrontDriveMotor = hardwareMap.dcMotor.get("left_front_motor");
+            rightFrontDriveMotor = hardwareMap.dcMotor.get("right_front_motor");
+            //reverse a motor so that both motors drive in the same direction
+            leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
+            frontMotorsExist = true;
+        } catch (IllegalArgumentException e) {
+            frontMotorsExist = false;
+        }
+
 
         //if the sensor does not exist, proceed with out it
         try {
@@ -92,6 +110,7 @@ public abstract class OutreachBotBase extends OpMode {
         //send telemetry
         telemetry.addData("left motor", leftSpeed);
         telemetry.addData("right motor", rightSpeed);
+        telemetry.addData("front motor status", frontMotorsExist);
         telemetry.addData("sensor status", doSensorsExist());
         //if sensors exist
         if (doSensorsExist()) {
