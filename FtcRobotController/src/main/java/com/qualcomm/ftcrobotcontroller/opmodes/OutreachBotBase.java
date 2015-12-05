@@ -44,6 +44,7 @@ public abstract class OutreachBotBase extends OpMode {
         leftDriveMotor = hardwareMap.dcMotor.get("left_motor");
         rightDriveMotor = hardwareMap.dcMotor.get("right_motor");
         //reverse a motor so that both motors drive in the same direction
+        leftDriveMotor.setDirection(DcMotor.Direction.FORWARD);
         rightDriveMotor.setDirection(DcMotor.Direction.REVERSE);
 
         try {
@@ -51,7 +52,7 @@ public abstract class OutreachBotBase extends OpMode {
             leftFrontDriveMotor = hardwareMap.dcMotor.get("left_front_motor");
             rightFrontDriveMotor = hardwareMap.dcMotor.get("right_front_motor");
             //reverse a motor so that both motors drive in the same direction
-            leftDriveMotor.setDirection(DcMotor.Direction.REVERSE);
+            rightFrontDriveMotor.setDirection(DcMotor.Direction.REVERSE);
             frontMotorsExist = true;
         } catch (IllegalArgumentException e) {
             frontMotorsExist = false;
