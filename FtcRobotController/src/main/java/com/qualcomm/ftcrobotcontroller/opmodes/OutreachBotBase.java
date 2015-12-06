@@ -36,6 +36,7 @@ public abstract class OutreachBotBase extends OpMode {
 
     private boolean frontMotorsExist;
 
+    protected boolean locked;
 
     //Set up motors and sensors
     @Override
@@ -58,7 +59,6 @@ public abstract class OutreachBotBase extends OpMode {
             frontMotorsExist = false;
         }
 
-
         //if the sensor does not exist, proceed with out it
         try {
             //get distance sensor
@@ -68,6 +68,8 @@ public abstract class OutreachBotBase extends OpMode {
         } catch (IllegalArgumentException e) {
             sensorsExist = false;
         }
+
+        locked = false;
     }
 
     /*
@@ -113,6 +115,7 @@ public abstract class OutreachBotBase extends OpMode {
         telemetry.addData("right motor", rightSpeed);
         telemetry.addData("front motor status", frontMotorsExist);
         telemetry.addData("sensor status", doSensorsExist());
+        telemetry.addData("locked status", locked);
         //if sensors exist
         if (doSensorsExist()) {
             telemetry.addData("distance sensor reading", distanceSensor.getLightDetected());
